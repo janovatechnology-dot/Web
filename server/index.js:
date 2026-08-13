@@ -1,0 +1,24 @@
+const express = require('express');
+const cors = require('cors');
+require('dotenv').config();
+
+const app = express();
+app.use(express.json());
+app.use(cors());
+
+// Sample Billing Route
+app.post('/api/billing/create-invoice', (req, res) => {
+    const { clientName, amount, plan } = req.body;
+    // Insert payment gateway logic (Stripe/Razorpay) here
+    res.status(200).json({ success: true, message: `Invoice created for ${clientName}`, amount });
+});
+
+// Sample Attendance Tracking Route
+app.post('/api/attendance/log', (req, res) => {
+    const { employeeId, timestamp, status } = req.body;
+    // Log attendance to DB
+    res.status(200).json({ success: true, message: `Attendance marked as ${status} for ID: ${employeeId}` });
+});
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`JANOVA Server running on port ${PORT}`));
